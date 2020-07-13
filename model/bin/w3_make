@@ -60,11 +60,17 @@
   temp_dir=$WWATCH3_TMP
   source=$WWATCH3_SOURCE
   list=$WWATCH3_LIST
+  nc_lib=$WWATCH3_NETCDF
+  nc_conf=$NETCDF_CONFIG
+
 
   echo "Main directory    : $main_dir"
   echo "Scratch directory : $temp_dir"
   echo "Save source codes : $source"
   echo "Save listings     : $list"
+  echo "NETCDF library    : $nc_lib"
+  echo "NETCDF config     : $nc_conf"
+
 
 # 1.d Check / make directories   - - - - - - - - - - - - - - - - - - - - - - -
 

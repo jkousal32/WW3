@@ -145,9 +145,19 @@ EOF
   set `grep WWATCH3_SOURCE $ww3_env` ; shift
   source="$*"
   export WWATCH3_SOURCE=$source
+
   set `grep WWATCH3_LIST $ww3_env` ; shift
   list="$*"
   export WWATCH3_LIST=$list
+
+  set `grep WWATCH3_NETCDF $ww3_env` ; shift
+  nc_lib="$*"
+  export WWATCH3_NETCDF=$nc_lib
+
+  set `grep NETCDF_CONFIG $ww3_env` ; shift
+  nc_conf="$*"
+  export NETCDF_CONFIG=$nc_conf
+
 
   path_mod="$(cd $(dirname $path_bin) 1>/dev/null 2>&1 && pwd)"
 

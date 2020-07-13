@@ -190,6 +190,14 @@ then
   list="$*"
   echo "      Save listings               : $list"
 
+  set `grep WWATCH3_NETCDF $ww3_env` ; shift
+  nc_lib="$*"
+  echo "      NETCDF library              : $nc_lib"
+
+  set `grep NETCDF_CONFIG $ww3_env` ; shift
+  nc_conf="$*"
+  echo "      NETCDF config               : $nc_conf"
+
 else
   echo "   Setup file $ww3_env not found"
 
@@ -209,6 +217,8 @@ else
   fi
   source=yes
   list=yes
+  nc_lib=NC4
+  nc_conf=/apps/netcdf/4.7.3/bin/nc-config
 
     echo ' '
     echo "   Default set up :"
@@ -218,6 +228,9 @@ else
     echo "      Scratch directory        : $temp_dir"
     echo "      Save sources             : $source"
     echo "      Save listings            : $list"
+    echo "      NETCDF library           : $nc_lib"
+    echo "      NETCDF config            : $nc_conf"
+
 fi
 
 
@@ -320,6 +333,21 @@ then
         list='no'
       fi
     fi
+    
+    echo -n "      NETCDF library  [$nc_lib] : "
+    instr="$NULL" ; read instr
+    if [ -n "$instr" ]
+    then
+      nc_lib="$instr"
+    fi
+
+    echo -n "      NETCDF config  [$nc_conf] : "
+    instr="$NULL" ; read instr
+    if [ -n "$instr" ]
+    then
+      nc_conf="$instr"
+    fi
+
 
     echo ' '
     echo "   Modified set up :"
@@ -329,6 +357,8 @@ then
     echo "      Scratch directory        : $temp_dir"
     echo "      Save sources             : $source"
     echo "      Save listings            : $list"
+    echo "      NETCDF library           : $nc_lib"
+    echo "      NETCDF config            : $nc_conf"
     echo -n "   New settings OK ? [y/n] "
     read OK
   done
@@ -349,6 +379,8 @@ echo "WWATCH3_DIR      $path_s"                  >> $ww3_env
 echo "WWATCH3_TMP      $temp_dir"                >> $ww3_env
 echo "WWATCH3_SOURCE   $source"                  >> $ww3_env
 echo "WWATCH3_LIST     $list"                    >> $ww3_env
+echo "WWATCH3_NETCDF   $nc_lib"                  >> $ww3_env
+echo "NETCDF_CONFIG    $nc_conf"                 >> $ww3_env
 echo ' '                                         >> $ww3_env
 
 # --------------------------------------------------------------------------- #

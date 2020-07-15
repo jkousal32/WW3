@@ -109,7 +109,8 @@
   # open mpi implementation
   if [ "$omp_mod" = 'yes' ]
   then
-    opt="$opt -openmp"
+    OMPI_HOME=~/openmpi-4.0.4/ompi
+    opt="$opt -qopenmp -I$OMPI_HOME/include"
   fi
 
   # oasis coupler archive

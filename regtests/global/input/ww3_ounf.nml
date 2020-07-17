@@ -30,11 +30,9 @@
 !     FIELD%TYPE                 = 3                  ! [2 = SHORT, 3 = it depends , 4 = REAL]
 ! -------------------------------------------------------------------- !
 &FIELD_NML
-  FIELD%TIMESTART        =  '20100606 000000'
-  FIELD%TIMESTRIDE       =  '120.'
-  FIELD%TIMECOUNT        =  '200'
-  FIELD%LIST             =  'DMAX ICE LM HS TWI T01 FP IC1 IC5'
-  FIELD%PARTITION        =  '0 1 2'
+  FIELD%TIMESTART        =  '20191201 000000'
+  FIELD%TIMESTRIDE       =  '7200.'
+  FIELD%LIST             =  'HS FP'
   FIELD%TYPE             =  4
 /
 

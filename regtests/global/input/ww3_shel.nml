@@ -22,8 +22,8 @@
 !     DOMAIN%STOP   = '19680607 000000'  ! Stop date for the entire model
 ! -------------------------------------------------------------------- !
 &DOMAIN_NML
-  DOMAIN%START   = '20100606 000000'
-  DOMAIN%STOP    = '20100606 030000'
+  DOMAIN%START   = '20191201 000000'
+  DOMAIN%STOP    = '20191202 000000'
 /
 
 ! -------------------------------------------------------------------- !
@@ -58,10 +58,7 @@
 !     INPUT%ASSIM%SPEC2D          = 'F'
 ! -------------------------------------------------------------------- !
 &INPUT_NML
-  INPUT%FORCING%ICE_PARAM1    = 'H'
-  INPUT%FORCING%ICE_PARAM2    = 'H'
-  INPUT%FORCING%ICE_PARAM5    = 'T'
-  INPUT%FORCING%ICE_CONC      = 'T'
+  INPUT%FORCING%WINDS         = 'H'
 /
 
 ! -------------------------------------------------------------------- !
@@ -241,8 +238,7 @@
 !
 ! -------------------------------------------------------------------- !
 &OUTPUT_TYPE_NML
-  TYPE%FIELD%LIST          = 'CFX HS LM IC1 IC5 ICE TWI FIC'
-  TYPE%POINT%FILE          = '../input/points.list'
+  TYPE%FIELD%LIST          = 'CFX HS FP'
 /
 
 ! -------------------------------------------------------------------- !
@@ -279,8 +275,7 @@
 !     DATE%RESTART             =  '19680606 000000' '0' '19680607 000000'
 ! -------------------------------------------------------------------- !
 &OUTPUT_DATE_NML
-  DATE%FIELD          = '20100606 000000' '300' '20100607 000000'
-  DATE%POINT          = '20100606 000000' '300' '20100612 000000'
+  DATE%FIELD          = '20191201 000000' '7200' '20191202 000000'
 /
 
 ! -------------------------------------------------------------------- !
@@ -329,18 +324,15 @@
 !     HOMOG_INPUT(I)%VALUE3         =  0
 ! -------------------------------------------------------------------- !
 &HOMOG_COUNT_NML
-  HOMOG_COUNT%N_IC1                =  1
-  HOMOG_COUNT%N_IC2                =  1
+  HOMOG_COUNT%N_WND            =  1
 /
 
 &HOMOG_INPUT_NML
-  HOMOG_INPUT(1)%NAME        = 'IC1'
-  HOMOG_INPUT(1)%DATE        = '20100606 000000'
-  HOMOG_INPUT(1)%VALUE1      = 2
-
-  HOMOG_INPUT(2)%NAME        = 'IC2'
-  HOMOG_INPUT(2)%DATE        = '20100606 000000'
-  HOMOG_INPUT(2)%VALUE1      = 0.0001
+  HOMOG_INPUT(1)%NAME           =  'WND'
+  HOMOG_INPUT(1)%DATE           =  '20191201 000000'
+  HOMOG_INPUT(1)%VALUE1         =  10
+  HOMOG_INPUT(1)%VALUE2         =  270
+  HOMOG_INPUT(1)%VALUE3         =  25
 /
 
 ! -------------------------------------------------------------------- !

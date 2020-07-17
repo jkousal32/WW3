@@ -15,10 +15,9 @@
 ! -------------------------------------------------------------------- !
 &SPECTRUM_NML
   SPECTRUM%XFR       =  1.1
-  SPECTRUM%FREQ1     =  0.04118
-  SPECTRUM%NK        =  20
-  SPECTRUM%NTH       =  24
-  SPECTRUM%THOFF     =  0
+  SPECTRUM%FREQ1     =  0.045
+  SPECTRUM%NK        =  30
+  SPECTRUM%NTH       =  36
 /
 
 ! -------------------------------------------------------------------- !
@@ -37,7 +36,6 @@
   RUN%FLCX         =  T
   RUN%FLCY         =  T
   RUN%FLCTH        =  T
-  RUN%FLCK         =  T
   RUN%FLSOU        =  T
 /
 
@@ -73,10 +71,10 @@
 !     TIMESTEPS%DTMIN      = 0.         ! minimum source term time step (s)
 ! -------------------------------------------------------------------- !
 &TIMESTEPS_NML
-  TIMESTEPS%DTMAX        =  300.
-  TIMESTEPS%DTXY         =  150.
-  TIMESTEPS%DTKTH        =  150.
-  TIMESTEPS%DTMIN        =  6.
+  TIMESTEPS%DTMAX        =  7200.
+  TIMESTEPS%DTXY         =  3600.
+  TIMESTEPS%DTKTH        =  3600.
+  TIMESTEPS%DTMIN        =  10.
 /
 
 ! -------------------------------------------------------------------- !
@@ -137,13 +135,13 @@
 !     GRID%DMIN             = 0.        ! abs. minimum water depth (m)
 ! -------------------------------------------------------------------- !
 &GRID_NML
-  GRID%NAME         =  'IDEALIZED 2D MODEL'
-  GRID%NML          =  '../input/namelists_IDEALIZED.nml'
+  GRID%NAME         =  'GLOBAL MODEL'
+  GRID%NML          =  '../input/namelists_GLOBAL.nml'
   GRID%TYPE         =  'RECT'
-  GRID%COORD        =  'CART'
-  GRID%CLOS         =  'NONE'
-  GRID%ZLIM         =  -5.
-  GRID%DMIN         =  5.75
+  GRID%COORD        =  'SPHE'
+  GRID%CLOS         =  'SMPL'
+  GRID%ZLIM         =  -0.10
+  GRID%DMIN         =  2.5
 /
 
 ! -------------------------------------------------------------------- !
@@ -173,13 +171,13 @@
 !     RECT%SF0              = 1.       ! scaling division factor for x0,y0 coord
 ! -------------------------------------------------------------------- !
 &RECT_NML
-  RECT%NX           =  100
-  RECT%NY           =  100
-  RECT%SX           =  2.5E3
-  RECT%SY           =  2.5E3
-  RECT%SF           =  1
-  RECT%X0           =  -2.5E3
-  RECT%Y0           =  -2.50E3
+  RECT%NX           =  720
+  RECT%NY           =  321
+  RECT%SX           =  30
+  RECT%SY           =  30
+  RECT%SF           =  60
+  RECT%X0           =  0
+  RECT%Y0           =  -80
   RECT%SF0          =  1
 /
 
@@ -220,9 +218,51 @@
 !     DEPTH%FORMAT         = '(....)' ! formatted read format
 ! -------------------------------------------------------------------- !
 &DEPTH_NML
-  DEPTH%SF        =  -2500.
-  DEPTH%FILENAME  =  '../input/IDEALIZED.depth'
-  DEPTH%IDLA      =  2
+  DEPTH%FILENAME  =  '../../../../data/grids/global.depth_ascii'
+/
+
+! -------------------------------------------------------------------- !
+! Define the point status map via MASK_NML namelist
+! - only for RECT and CURV grids -
+!
+! * If no mask defined, INBOUND can be used to set active boundaries
+!
+! * IDLA : Layout indicator :
+!                  1   : Read line-by-line bottom to top.  (default)
+!                  2   : Like 1, single read statement.
+!                  3   : Read line-by-line top to bottom.
+!                  4   : Like 3, single read statement.
+! * IDFM : format indicator :
+!                  1   : Free format.  (default)
+!                  2   : Fixed format.
+!                  3   : Unformatted.
+! * FORMAT : element format to read :
+!               '(....)'  : auto detected  (default)
+!               '(f10.6)' : float type
+!
+! * Example :
+!      IDF  IDLA  IDFM   FORMAT    FILENAME
+!      60   1     1     '(....)'  'GLOB-30M.mask'
+!
+! * The legend for the input map is :
+!    -2 : Excluded boundary point (covered by ice)
+!    -1 : Excluded sea point (covered by ice)
+!     0 : Excluded land point
+!     1 : Sea point
+!     2 : Active boundary point
+!     3 : Excluded grid point
+!     7 : Ice point
+!
+! * namelist must be terminated with /
+! * definitions & defaults:
+!     MASK%FILENAME         = 'unset'  ! filename
+!     MASK%IDF              = 60       ! file unit number
+!     MASK%IDLA             = 1        ! layout indicator
+!     MASK%IDFM             = 1        ! format indicator
+!     MASK%FORMAT           = '(....)' ! formatted read format
+! -------------------------------------------------------------------- !
+&MASK_NML
+  MASK%FILENAME         = '../../../../data/grids/global.maskorig_ascii'
 /
 
 ! -------------------------------------------------------------------- !
@@ -273,8 +313,7 @@
 !     OBST%FORMAT          = '(....)' ! formatted read format
 ! -------------------------------------------------------------------- !
 &OBST_NML
-  OBST%SF        =  0.2
-  OBST%FILENAME  =  '../input/test.obs'
+  OBST%FILENAME  =  '../../../../data/grids/global.obstr_lev1'
 /
 
 ! -------------------------------------------------------------------- !

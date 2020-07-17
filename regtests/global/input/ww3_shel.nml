@@ -58,7 +58,7 @@
 !     INPUT%ASSIM%SPEC2D          = 'F'
 ! -------------------------------------------------------------------- !
 &INPUT_NML
-  INPUT%FORCING%WINDS         = 'H'
+  INPUT%FORCING%WINDS         = 'T'
 /
 
 ! -------------------------------------------------------------------- !
@@ -324,15 +324,9 @@
 !     HOMOG_INPUT(I)%VALUE3         =  0
 ! -------------------------------------------------------------------- !
 &HOMOG_COUNT_NML
-  HOMOG_COUNT%N_WND            =  1
 /
 
 &HOMOG_INPUT_NML
-  HOMOG_INPUT(1)%NAME           =  'WND'
-  HOMOG_INPUT(1)%DATE           =  '20191201 000000'
-  HOMOG_INPUT(1)%VALUE1         =  10
-  HOMOG_INPUT(1)%VALUE2         =  270
-  HOMOG_INPUT(1)%VALUE3         =  25
 /
 
 ! -------------------------------------------------------------------- !

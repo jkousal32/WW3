@@ -19,9 +19,8 @@
 !     POINT%DIMORDER             = T                  ! [time,station=T | station,time=F]
 ! -------------------------------------------------------------------- !
 &POINT_NML
-  POINT%TIMESTART        =  '19850101 000000'
-  POINT%TIMESTRIDE       =  '3600.'
-  POINT%TIMECOUNT        =  '1000'
+  POINT%TIMESTART        =  '20191201 000000'
+  POINT%TIMESTRIDE       =  '7200.'
 /
 
 ! -------------------------------------------------------------------- !

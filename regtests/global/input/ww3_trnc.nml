@@ -14,8 +14,8 @@
 !     TRACK%TIMESPLIT            = 6                  ! [4(yearly),6(monthly),8(daily),10(hourly)]
 ! -------------------------------------------------------------------- !
 &TRACK_NML
-  TRACK%TIMESTART        =  '20100101 000000'
-  TRACK%TIMESTRIDE       =  '3600'
+  TRACK%TIMESTART        =  '20191201 000000'
+  TRACK%TIMESTRIDE       =  '7200'
 /
 
 

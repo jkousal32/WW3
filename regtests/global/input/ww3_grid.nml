@@ -136,7 +136,7 @@
 ! -------------------------------------------------------------------- !
 &GRID_NML
   GRID%NAME         =  'GLOBAL MODEL'
-  GRID%NML          =  '../input/namelists_GLOBAL.nml'
+  GRID%NML          =  '../../../../../../g/data3/qw43/jk3847/WW3/regtests/global/input/namelists_GLOBAL.nml'
   GRID%TYPE         =  'RECT'
   GRID%COORD        =  'SPHE'
   GRID%CLOS         =  'SMPL'
@@ -218,7 +218,7 @@
 !     DEPTH%FORMAT         = '(....)' ! formatted read format
 ! -------------------------------------------------------------------- !
 &DEPTH_NML
-  DEPTH%FILENAME  =  '../../../../data/grids/global.depth_ascii'
+  DEPTH%FILENAME  =  '../../inputs/grids/global.depth_ascii'
 /
 
 ! -------------------------------------------------------------------- !
@@ -262,7 +262,7 @@
 !     MASK%FORMAT           = '(....)' ! formatted read format
 ! -------------------------------------------------------------------- !
 &MASK_NML
-  MASK%FILENAME         = '../../../../data/grids/global.maskorig_ascii'
+  MASK%FILENAME         = '../../inputs/grids/global.maskorig_ascii'
 /
 
 ! -------------------------------------------------------------------- !
@@ -313,7 +313,7 @@
 !     OBST%FORMAT          = '(....)' ! formatted read format
 ! -------------------------------------------------------------------- !
 &OBST_NML
-  OBST%FILENAME  =  '../../../../data/grids/global.obstr_lev1'
+  OBST%FILENAME  =  '../../inputs/grids/global.obstr_lev1'
 /
 
 ! -------------------------------------------------------------------- !

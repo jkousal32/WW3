@@ -38,7 +38,7 @@
 ! -------------------------------------------------------------------- !
 &FORCING_NML
   FORCING%TIMESTART         = '20191201 000000'
-  FORCING%TIMESTOP          = '20191202 000000'
+  FORCING%TIMESTOP          = '20191229 000000'
   FORCING%FIELD%ICE_CONC    = t
   FORCING%GRID%LATLON       = t
 /

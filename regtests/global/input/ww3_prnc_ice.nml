@@ -37,8 +37,8 @@
 !     FORCING%TIDAL                = 'unset'     ! Set the tidal constituents [FAST | VFAST | 'M2 S2 N2']
 ! -------------------------------------------------------------------- !
 &FORCING_NML
-  FORCING%TIMESTART         = '20191201 000000'
-  FORCING%TIMESTOP          = '20191229 000000'
+  FORCING%TIMESTART         = '20191101 000000'
+  FORCING%TIMESTOP          = '20200229 000000'
   FORCING%FIELD%ICE_CONC    = t
   FORCING%GRID%LATLON       = t
 /
@@ -69,7 +69,7 @@
 !     FILE%TIMESHIFT     = '00000000 000000' ! shift the time value to 'YYYYMMDD HHMMSS'
 ! -------------------------------------------------------------------- !
 &FILE_NML
-  FILE%FILENAME      = '../../inputs/ecmwf/SIC_2hourly_dec.nc'
+  FILE%FILENAME      = '../../inputs/ecmwf/SIC_3hourly.nc'
   FILE%LONGITUDE     = 'longitude'
   FILE%LATITUDE      = 'latitude'
   FILE%VAR(1)        = 'siconc'

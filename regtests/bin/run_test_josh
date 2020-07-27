@@ -1473,6 +1473,11 @@ fi
 
 # 3.f Main program ---------------------------------------------------------- #
 
+if [ -e $path_i/points.list ]
+then
+  cp $path_i/points.list .
+fi
+
 if [ -e $path_i/bottomspectrum.inp ]
 then  
   cp $path_i/bottomspectrum.inp .

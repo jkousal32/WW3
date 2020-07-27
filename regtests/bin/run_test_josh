@@ -262,9 +262,10 @@ fi
 # 2.g Path to working directory
 if [ $wrkdir ]
 then
-  path_w="/scratch/qw43/jk3847/WW3/global/$wrkdir"
+  path_w="/scratch/qw43/jk3847/WW3/work/$wrkdir"
 else
-  path_w="/scratch/qw43/jk3847/WW3/global/work"
+  errmsg "no work directory specified"
+  exit 1  
 fi
 
 # 2.h Paths to source subdirectories

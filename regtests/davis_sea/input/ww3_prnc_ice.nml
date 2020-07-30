@@ -69,9 +69,9 @@
 !     FILE%TIMESHIFT     = '00000000 000000' ! shift the time value to 'YYYYMMDD HHMMSS'
 ! -------------------------------------------------------------------- !
 &FILE_NML
-  FILE%FILENAME      = '../../inputs/ecmwf/SIC_davis_sea_daily_amsr2.nc'
-  FILE%LONGITUDE     = 'longitude'
-  FILE%LATITUDE      = 'latitude'
+  FILE%FILENAME      = '../../inputs/amsr2/SIC_out.nc'
+  FILE%LONGITUDE     = 'x'
+  FILE%LATITUDE      = 'y'
   FILE%VAR(1)        = 'sea_ice_concentration'
 /
 

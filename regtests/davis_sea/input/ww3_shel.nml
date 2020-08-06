@@ -23,7 +23,7 @@
 ! -------------------------------------------------------------------- !
 &DOMAIN_NML
   DOMAIN%START   = '20191122 000000'
-  DOMAIN%STOP    = '20191124 000000'
+  DOMAIN%STOP    = '20191129 000000'
 /
 
 ! -------------------------------------------------------------------- !
@@ -336,24 +336,12 @@
 ! -------------------------------------------------------------------- !
 &HOMOG_COUNT_NML
   HOMOG_COUNT%N_IC1            =  1
-  HOMOG_COUNT%N_IC2            =  1
-  HOMOG_COUNT%N_IC3            =  1
-  HOMOG_COUNT%N_IC4            =  1
 /
 
 &HOMOG_INPUT_NML
   HOMOG_INPUT(1)%NAME           =  'IC1'
   HOMOG_INPUT(1)%DATE           =  '20191120 000000'
-  HOMOG_INPUT(1)%VALUE1         =  1.1
-  HOMOG_INPUT(2)%NAME           =  'IC2'
-  HOMOG_INPUT(2)%DATE           =  '20191120 000000'
-  HOMOG_INPUT(2)%VALUE1         =  5E7
-  HOMOG_INPUT(3)%NAME           =  'IC3'
-  HOMOG_INPUT(3)%DATE           =  '20191120 000000'
-  HOMOG_INPUT(3)%VALUE1         =  917.
-  HOMOG_INPUT(4)%NAME           =  'IC4'
-  HOMOG_INPUT(4)%DATE           =  '20191120 000000'
-  HOMOG_INPUT(4)%VALUE1         =  4.9E12
+  HOMOG_INPUT(1)%VALUE1         =  0.55
 /
 
 ! -------------------------------------------------------------------- !

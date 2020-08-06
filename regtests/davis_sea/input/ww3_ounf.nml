@@ -32,7 +32,7 @@
 &FIELD_NML
   FIELD%TIMESTART        =  '20191101 000000'
   FIELD%TIMESTRIDE       =  '10800.'
-  FIELD%LIST             =  'HS FP T02 DIR SPR WND ICE'
+  FIELD%LIST             =  'HS FP T02 DIR SPR ICE'
   FIELD%TYPE             =  4
 /
 

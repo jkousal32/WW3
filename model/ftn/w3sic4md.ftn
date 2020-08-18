@@ -71,7 +71,7 @@
 !/
       CONTAINS
 !/ ------------------------------------------------------------------- /
-      SUBROUTINE W3SIC4 (A, DEPTH, CG, IX, IY, S, D)
+      SUBROUTINE W3SIC4 (A, DEPTH, CG, WN, IX, IY, S, D)
 !/
 !/                  +-----------------------------------+
 !/                  | WAVEWATCH III           NOAA/NCEP |
@@ -507,7 +507,7 @@
 
         CASE (8) ! Sutherland et al. (AOR 2019)
            HICE = ICECOEF1 ! for this method, ICECOEF1=ice thickness
-           !HICE = HICE*EXP(-PI*ICECONC) ! scale by a function based on
+           HICE = HICE*EXP(-PI*ICECONC) ! scale by a function based on
            !ice concentration
            DO IK=1, NK
               WN_I(IK) = 0.25*HICE*WN(IK)*SIG(IK)/CG(IK)

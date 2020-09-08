@@ -71,7 +71,7 @@
 !/
       CONTAINS
 !/ ------------------------------------------------------------------- /
-      SUBROUTINE W3SIC4 (A, DEPTH, CG, WN, IX, IY, S, D)
+      SUBROUTINE W3SIC4 (A, DEPTH, CG, WN, IX, IY, S, D, FPI, USTAR)
 !/
 !/                  +-----------------------------------+
 !/                  | WAVEWATCH III           NOAA/NCEP |
@@ -225,6 +225,8 @@
 !       IX,IY   I.S.  I   Grid indices.
 !       S       R.A.  O   Source term (1-D version).
 !       D       R.A.  O   Diagonal term of derivative (1-D version).
+!       FPI     Real  I   Peak input frequency.
+!       USTAR   Real  I   Friction velocity.              
 !     ----------------------------------------------------------------
 !
 !  4. Subroutines used :
@@ -283,7 +285,7 @@
 ! 10. Source code :
 !
 !/ ------------------------------------------------------------------- /
-      USE CONSTANTS, ONLY: TPI, GRAV, PI
+      USE CONSTANTS, ONLY: TPI, GRAV, PI, TPIINV
       USE W3ODATMD, ONLY: NDSE
       USE W3SERVMD, ONLY: EXTCDE
       USE W3GDATMD, ONLY: NK, NTH, NSPEC, SIG, MAPWN, IC4PARS, DDEN, &
@@ -301,6 +303,7 @@
 !/ ------------------------------------------------------------------- /
 !/ Parameter list
       REAL, INTENT(IN)        :: CG(NK), WN(NK), A(NSPEC), DEPTH
+      REAL, INTENT(IN)        :: FPI, USTAR
       REAL, INTENT(OUT)       :: S(NSPEC), D(NSPEC)
       INTEGER, INTENT(IN)     :: IX, IY
 !/
@@ -321,7 +324,9 @@
       REAL, ALLOCATABLE       :: ALPHA(:) ! exponential decay rate for energy
       REAL, ALLOCATABLE       :: MARG1(:), MARG2(:) ! Arguments for M2
       REAL, ALLOCATABLE       :: KARG1(:), KARG2(:), KARG3(:) !Arguments for M3
-
+      REAL                    :: IBR_CONST1, IBR_CONST2, &
+                                 IBR_CONST3, IBR_CONST4, IBR_CONST5
+      REAL                    :: LAMBDASQ, IBR, FPISTR, UST, FP
 !/
 !/ ------------------------------------------------------------------- /
 !/
@@ -355,7 +360,12 @@
       ICECOEF8 = 0.0
       HS       = 0.0
       HICE     = 0.0
-      EMEAN    = 0.0      
+      EMEAN    = 0.0    
+      IBR_CONST1 = 0.0
+      IBR_CONST2 = 0.0
+      IBR_CONST3 = 0.0
+      IBR_CONST4 = 0.0
+      IBR_CONST5 = 0.0
 !
 !     IF (.NOT.INFLAGS2(-7))THEN
 !        WRITE (NDSE,1001) 'ICE PARAMETER 1'
@@ -512,6 +522,82 @@
            DO IK=1, NK
               WN_I(IK) = 0.25*HICE*WN(IK)*SIG(IK)/CG(IK)
            END DO
+
+
+    
+        CASE (9) ! As for case 8 + Voermans et al. 2020 ice break threshold
+                 ! Author J. Kousal
+                 ! TODO: check L=2pi/k relationship (L=1/k ?)
+                 ! TODO: check WN_I=0 sets attenuation to 0
+
+           IBR_CONST1 = 1.1     ! Real ice height          (h=1.1m)
+
+           !IBR_CONST2 = 6E+9    ! Young's modulus          (Y=6GPa)
+           IBR_CONST2 = 6E+9*0.01 ! Experimenting with this to shift
+                                  ! wave front
+
+           IBR_CONST3 = 0.55E+6 ! flexural strength of ice (sig=0.55MPa)
+           IBR_CONST4 = 0.015   ! non-dimensional threshold as 
+                                ! in Voermans et al. 2020  (I_br=0.015)
+           IBR_CONST5 = 0.01    ! factor to reduce attenuation through 
+                                ! broken ice
+   
+           !Calculate HS
+           DO IK=1, NK
+             EB(IK) = 0.
+             DO ITH=1, NTH
+                EB(IK) = EB(IK) + A(ITH+(IK-1)*NTH)
+             END DO
+           END DO
+           DO IK=1, NK
+             EB(IK) = EB(IK) * DDEN(IK) / CG(IK)
+             EMEAN  = EMEAN + EB(IK)
+           END DO
+           HS = 4.*SQRT( MAX(0.,EMEAN) )
+
+           !Estimate peak frequency (FP) from FPI as in w3src2md, W3SPR2
+           UST    = MAX ( 0.0001 , USTAR )
+           FPISTR = MAX ( 0.008 , FPI * UST / GRAV )
+           FP     = ( 3.6E-4 + 0.92*FPISTR - 6.3E-10/FPISTR**3 )/UST*GRAV
+           FP     = FP * TPIINV
+           
+           !   lambda = (2*pi) / k
+           !   k = angf_peak**2 / g 
+           !     = (2*pi*f_peak)**2 / g
+           !   lambda = (2*pi) / [(2*pi*f_peak)**2 / g]
+           !          = (2*pi*g) / (2*pi*f_peak)**2
+           !          = g / (2*pi*(f_peak**2))
+           !   lambda**2 = ( g / (2*pi*(f_peak**2)) )**2
+           LAMBDASQ = ( GRAV * TPIINV / (FP**2) )**2
+           IBR = HS*IBR_CONST1*IBR_CONST2 / (IBR_CONST3*LAMBDASQ)
+
+!           IF (IY > 7 .AND. IY < 10 .AND. IX > 159 .AND. IX < 161) THEN
+!           IF (IY == 79 .AND. IX == 46) THEN
+!           IF (HS >= 0.3) THEN
+!           IF (FP >= 0.8) THEN
+!           IF (IBR <= IBR_CONST4) THEN
+              !WRITE(*,*) 'HS=', HS
+              !WRITE(*,*) 'FP=', FP
+!              WRITE(*,*) 'IBR=', IBR
+!             ENDIF
+!           ENDIF
+
+           HICE = ICECOEF1 ! for this method, ICECOEF1=ice thickness
+           !HICE = HICE*EXP(-PI*ICECONC) ! scale by a function based on
+           !ice concentration 
+           !    - this one doesn't work physically with Ibr
+           !    - furthermore, ICECONC isn't actually available here yet...
+           ! Some physically based HICE scalings
+           !HICE = HICE*ICECONC
+           !HICE = HICE*(ICECONC**2)
+
+           DO IK=1, NK
+              WN_I(IK) = 0.25*HICE*WN(IK)*SIG(IK)/CG(IK)
+           END DO
+           
+           ! Full attenuation for unbroken ice, else reduce by factor IBR_CONST5
+           IF (IBR >= IBR_CONST4) WN_I = IBR_CONST5*WN_I 
+
 
         CASE DEFAULT
           WN_I = ICECOEF1 !Default to IC1: Uniform in k

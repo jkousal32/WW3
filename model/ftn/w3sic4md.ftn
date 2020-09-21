@@ -517,7 +517,7 @@
 
         CASE (8) ! Sutherland et al. (AOR 2019)
            HICE = ICECOEF1 ! for this method, ICECOEF1=ice thickness
-           HICE = HICE*EXP(-PI*ICECONC) ! scale by a function based on
+           !HICE = HICE*EXP(-PI*ICECONC) ! scale by a function based on
            !ice concentration
            DO IK=1, NK
               WN_I(IK) = 0.25*HICE*WN(IK)*SIG(IK)/CG(IK)
@@ -535,13 +535,15 @@
            !IBR_CONST2 = 6E+9    ! Young's modulus          (Y=6GPa)
            IBR_CONST2 = 6E+9*0.01 ! Experimenting with this to shift
                                   ! wave front
+                                  ! NOTE: adjusting this has same effect as
+                                  !       adjusting threshold value
 
            IBR_CONST3 = 0.55E+6 ! flexural strength of ice (sig=0.55MPa)
            IBR_CONST4 = 0.015   ! non-dimensional threshold as 
                                 ! in Voermans et al. 2020  (I_br=0.015)
-           IBR_CONST5 = 0.01    ! factor to reduce attenuation through 
-                                ! broken ice
-   
+           IBR_CONST5 = 1E+3    ! solid ice: increase attenuation by IBR_CONST5
+
+
            !Calculate HS
            DO IK=1, NK
              EB(IK) = 0.
@@ -595,8 +597,8 @@
               WN_I(IK) = 0.25*HICE*WN(IK)*SIG(IK)/CG(IK)
            END DO
            
-           ! Full attenuation for unbroken ice, else reduce by factor IBR_CONST5
-           IF (IBR >= IBR_CONST4) WN_I = IBR_CONST5*WN_I 
+           ! Increase attenuation for solid ice by factor IBR_CONST5
+           IF (IBR <= IBR_CONST4) WN_I = IBR_CONST5*WN_I
 
 
         CASE DEFAULT

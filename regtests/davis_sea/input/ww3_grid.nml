@@ -218,7 +218,7 @@
 !     DEPTH%FORMAT         = '(....)' ! formatted read format
 ! -------------------------------------------------------------------- !
 &DEPTH_NML
-  DEPTH%FILENAME  =  '../../inputs/grids/davis_sea.depth_ascii'
+  DEPTH%FILENAME  =  '../../inputs/grids/davis_sea_ADD.depth_ascii'
 /
 
 ! -------------------------------------------------------------------- !
@@ -262,7 +262,7 @@
 !     MASK%FORMAT           = '(....)' ! formatted read format
 ! -------------------------------------------------------------------- !
 &MASK_NML
-  MASK%FILENAME         = '../../inputs/grids/davis_sea.maskorig_ascii_activateBC'
+  MASK%FILENAME         = '../../inputs/grids/davis_sea_ADD.maskorig_ascii'
 /
 
 ! -------------------------------------------------------------------- !
@@ -313,7 +313,7 @@
 !     OBST%FORMAT          = '(....)' ! formatted read format
 ! -------------------------------------------------------------------- !
 &OBST_NML
-  OBST%FILENAME  =  '../../inputs/grids/davis_sea.obstr_lev1'
+  OBST%FILENAME  =  '../../inputs/grids/davis_sea_ADD.obstr_lev1'
 /
 
 ! -------------------------------------------------------------------- !

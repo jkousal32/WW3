@@ -71,9 +71,9 @@
 !     TIMESTEPS%DTMIN      = 0.         ! minimum source term time step (s)
 ! -------------------------------------------------------------------- !
 &TIMESTEPS_NML
-  TIMESTEPS%DTMAX        =  900.
-  TIMESTEPS%DTXY         =  450.
-  TIMESTEPS%DTKTH        =  450.
+  TIMESTEPS%DTMAX        =  1800.
+  TIMESTEPS%DTXY         =  900.
+  TIMESTEPS%DTKTH        =  900.
   TIMESTEPS%DTMIN        =  10.
 /
 
@@ -351,15 +351,22 @@
 !     OUTBND_LINE(I)%NP     = 0               ! number of points
 ! OR
 !     OUTBND_LINE(I)        = 0. 0. 0. 0. 0   ! included lines
+! -------
+! JOSH (working for 0.5deg)
+!&OUTBND_LINE_NML
+!  OUTBND_LINE(1)           =  60.0 -67.0 0.0 0.5 15
+!  OUTBND_LINE(2)           =  80.0 -67.5 0.0 0.5 16
+!  OUTBND_LINE(3)           =  60.5 -60.0 0.5 0.0 39
+!
 ! -------------------------------------------------------------------- !
 &OUTBND_COUNT_NML
   OUTBND_COUNT%N_LINE   =  3
 /
 
 &OUTBND_LINE_NML
-  OUTBND_LINE(1)           =  60.0 -67.0 0.0 0.5 15
-  OUTBND_LINE(2)           =  80.0 -67.5 0.0 0.5 16
-  OUTBND_LINE(3)           =  60.5 -60.0 0.5 0.0 39
+  OUTBND_LINE(1)           =  60.0 -67.3 0.0 0.1 74
+  OUTBND_LINE(2)           =  80.0 -67.9 0.0 0.1 80
+  OUTBND_LINE(3)           =  60.1 -60.0 0.1 0.0 199
 /
 
 

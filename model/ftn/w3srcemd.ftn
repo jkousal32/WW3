@@ -59,7 +59,7 @@
                           TAUWY, TAUOX, TAUOY, TAUWIX, TAUWIY, TAUWNX,&
                           TAUWNY, PHIAW, CHARN, TWS, PHIOC, WHITECAP, &
                           D50, PSIC, BEDFORM , PHIBBL, TAUBBL, TAUICE,&
-                          PHICE, COEF) 
+                          PHICE, COEF, IBR_MEM) 
 !/
 !/                  +-----------------------------------+
 !/                  | WAVEWATCH III           NOAA/NCEP |
@@ -448,6 +448,7 @@
                                  TAUBBL(2), TAUICE(2), WHITECAP(4),   &
                                  TAUWIX, TAUWIY, TAUWNX, TAUWNY,      &
                                  ICEF
+      INTEGER, INTENT(INOUT)  :: IBR_MEM(:,:)
       REAL, INTENT(OUT)       :: DTDYN, FCUT
       REAL, INTENT(IN)        :: COEF
 !/
@@ -1376,7 +1377,7 @@
 !/IC2                              IX, IY, VSIC, VDIC, WN_R, CG_ICE, ALPHA_LIU, R)
 !/IC3      CALL W3SIC3 ( SPEC,DEPTH, CG1,  WN1, IX, IY, VSIC, VDIC )
 !/IC4      CALL CALC_FPI(SPEC, CG1, FPI, VSIN )
-!/IC4      CALL W3SIC4 ( SPEC,DEPTH, CG1,  WN1, IX, IY, VSIC, VDIC, FPI, USTAR)
+!/IC4      CALL W3SIC4 ( SPEC,DEPTH, CG1,  WN1, IX, IY, VSIC, VDIC, FPI, USTAR, IBR_MEM)
 !/IC5      CALL W3SIC5 ( SPEC,DEPTH, CG1,  WN1, IX, IY, VSIC, VDIC )
 !
 !/IS1      CALL W3SIS1 ( SPEC, ICE, VSIR )

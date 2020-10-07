@@ -543,7 +543,8 @@
            IBR_CONST3 = 0.55E+6 ! flexural strength of ice (sig=0.55MPa)
            IBR_CONST4 = 0.015   ! non-dimensional threshold as 
                                 ! in Voermans et al. 2020  (I_br=0.015)
-           IBR_CONST5 = 1E+3    ! solid ice: increase attenuation by IBR_CONST5
+           !IBR_CONST5 = 1E+3    ! solid ice:  increase attenuation by IBR_CONST5
+           IBR_CONST5 = 0.1     ! broken ice: decrease attenuation by IBR_CONST5
 
 
            !Calculate HS
@@ -588,19 +589,46 @@
               WN_I(IK) = 0.25*HICE*WN(IK)*SIG(IK)/CG(IK)
            END DO
            
+           ! ----------------------------------------
            ! Increase attenuation for unbroken ice
 
            ! 0. Assume all ice solid  (IBR_MEM=0)
 
            ! 1. If threshold exceeded (i.e. ice breaks), record
+           !IF (IBR >= IBR_CONST4) THEN
+           !   IBR_MEM(IX,IY) = 1
+           !ENDIF
+
+           ! 2. Increase attenuation for solid ice (factor IBR_CONST5)
+           !IF ( (IBR <= IBR_CONST4) .AND. (IBR_MEM(IX,IY)==0) ) THEN
+           !   WN_I = IBR_CONST5*WN_I
+           !ENDIF
+
+           ! ----------------------------------------
+           ! Decrease attenuation for broken ice
+
+           ! 1. Assume all ice solid  (IBR_MEM=0)
+
+           ! 2. Decrease attenuation for broken ice (factor IBR_CONST5)
+
+           !   M1: No change in attenuation for broken/unbroken ice at all 
+           !       - Can use A=1 with this case (9) or just use case 8
+
+           !   M2: Only use threshold
+           !IF (IBR >= IBR_CONST4) THEN
+           !   WN_I = IBR_CONST5*WN_I
+           !ENDIF
+
+           !   M3: Use memory
+           !       - If threshold exceeded (i.e. ice breaks), record
            IF (IBR >= IBR_CONST4) THEN
               IBR_MEM(IX,IY) = 1
            ENDIF
-
-           ! 2. Increase attenuation for solid ice (factor IBR_CONST5)
-           IF ( (IBR <= IBR_CONST4) .AND. (IBR_MEM(IX,IY)==0) ) THEN
+           !       - Use memory record
+           IF ( IBR_MEM(IX,IY)==1 ) THEN
               WN_I = IBR_CONST5*WN_I
            ENDIF
+           ! ----------------------------------------
 
 
            ! Print checks

@@ -652,61 +652,6 @@
            !   ENDIF
            !ENDIF
 
-        CASE (10)! As for case 9, but 
-                 ! power 3 frequency dependency (as in IC5M2), as opposed to
-                 ! power 4 frequency dependency in case 9
-                 ! NOTE: revert to regular IC5M2 by setting IBR_CONST5=1
-                 ! Author J. Kousal
-
-           IBR_CONST1 = 1.1     ! Real ice height          (h=1.1m)
-
-           !IBR_CONST2 = 6E+9    ! Young's modulus          (Y=6GPa)
-           IBR_CONST2 = 6E+9*0.01 ! Experimenting with this to shift
-                                  ! wave front
-                                  ! NOTE: adjusting this has same effect as
-                                  !       adjusting threshold value
-
-           IBR_CONST3 = 0.55E+6 ! flexural strength of ice (sig=0.55MPa)
-           IBR_CONST4 = 0.015   ! non-dimensional threshold as 
-                                ! in Voermans et al. 2020  (I_br=0.015)
-
-           ! solid ice: increase attenuation by IBR_CONST5
-           IBR_CONST5 = 1       ! Setting to 1 --> regular IC5M2
-           !IBR_CONST5 = 1E+3    ! solid ice identified by threshold; attenuate heavily
-
-           !Calculate HS
-           DO IK=1, NK
-             EB(IK) = 0.
-             DO ITH=1, NTH
-                EB(IK) = EB(IK) + A(ITH+(IK-1)*NTH)
-             END DO
-           END DO
-           DO IK=1, NK
-             EB(IK) = EB(IK) * DDEN(IK) / CG(IK)
-             EMEAN  = EMEAN + EB(IK)
-           END DO
-           HS = 4.*SQRT( MAX(0.,EMEAN) )
-
-           !Estimate peak frequency (FP) from FPI as in w3src2md, W3SPR2
-           UST    = MAX ( 0.0001 , USTAR )
-           FPISTR = MAX ( 0.008 , FPI * UST / GRAV )
-           FP     = ( 3.6E-4 + 0.92*FPISTR - 6.3E-10/FPISTR**3 )/UST*GRAV
-           FP     = FP * TPIINV
-
-           !   lambda**2 = ( g / (2*pi*(f_peak**2)) )**2
-           LAMBDASQ = ( GRAV * TPIINV / (FP**2) )**2
-           IBR = HS*IBR_CONST1*IBR_CONST2 / (IBR_CONST3*LAMBDASQ)
-
-           HICE = ICECOEF1 ! for this method, ICECOEF1=ice thickness
-           DO IK=1, NK
-              WN_I(IK) = 0.25*HICE*WN(IK)/CG(IK)          ! power 3 freq. dep.
-              !WN_I(IK) = 0.25*HICE*WN(IK)*SIG(IK)/CG(IK) ! power 4 freq. dep. for comparison
-           END DO
-
-           ! Increase attenuation for solid ice by factor IBR_CONST5
-           IF (IBR <= IBR_CONST4) WN_I = IBR_CONST5*WN_I
-
-
         CASE DEFAULT
           WN_I = ICECOEF1 !Default to IC1: Uniform in k
       

@@ -338,7 +338,7 @@
 
 &HOMOG_INPUT_NML
   HOMOG_INPUT(1)%NAME           =  'IC1'
-  HOMOG_INPUT(1)%VALUE1         =  0.012
+  HOMOG_INPUT(1)%VALUE1         =  1.20
 /
 
 ! -------------------------------------------------------------------- !

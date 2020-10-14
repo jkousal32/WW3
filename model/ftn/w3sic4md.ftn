@@ -534,7 +534,7 @@
 
            IBR_CONST1 = 1.1     ! Real ice height          (h=1.1m)
 
-           !IBR_CONST2 = 6E+9    ! Young's modulus          (Y=6GPa)
+           !IBR_CONST2 = 6E+9     ! Young's modulus          (Y=6GPa)
            IBR_CONST2 = 6E+9*0.01 ! Experimenting with this to shift
                                   ! wave front
                                   ! NOTE: adjusting this has same effect as
@@ -544,7 +544,7 @@
            IBR_CONST4 = 0.015   ! non-dimensional threshold as 
                                 ! in Voermans et al. 2020  (I_br=0.015)
            !IBR_CONST5 = 1E+3    ! solid ice:  increase attenuation by IBR_CONST5
-           IBR_CONST5 = 0.1     ! broken ice: decrease attenuation by IBR_CONST5
+           IBR_CONST5 = 0.01     ! broken ice: decrease attenuation by IBR_CONST5
 
 
            !Calculate HS
@@ -612,37 +612,10 @@
            IF (IBR >= IBR_CONST4) THEN
               IBR_MEM(IX,IY) = 1
            ENDIF
-           !       - Use memory record
+           !       - Use memory, decrease attenuation for broken ice
            IF ( IBR_MEM(IX,IY)==1 ) THEN
               WN_I = IBR_CONST5*WN_I
            ENDIF
-           ! ----------------------------------------
-           ! OR, INCREASE attenuation for unbroken ice
-
-           ! 1. Assume all ice solid  (IBR_MEM=0)
-
-           ! 2. Decrease attenuation for broken ice (factor IBR_CONST5)
-
-           ! -----------
-           !   M1: No change in attenuation for broken/unbroken ice at all 
-           !       - Can use A=1 with this case (9) or just use case 8
-
-           ! -----------
-           !   M2: Only use instanteous threshold (i.e. assume constant ice refreeze)
-           !IF (IBR <= IBR_CONST4) THEN
-           !   WN_I = IBR_CONST5*WN_I
-           !ENDIF
-
-           ! -----------
-           !   M3: Use memory (i.e. assume ice remains permanently broken)
-           !       - If threshold exceeded (i.e. ice breaks), record
-           !IF (IBR <= IBR_CONST4) THEN
-           !   IBR_MEM(IX,IY) = 1
-           !ENDIF
-           !       - Use memory record
-           !IF ( IBR_MEM(IX,IY)==1 ) THEN
-           !   WN_I = IBR_CONST5*WN_I
-           !ENDIF
            ! ----------------------------------------
 
 

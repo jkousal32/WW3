@@ -534,17 +534,27 @@
 
            IBR_CONST1 = 1.1     ! Real ice height          (h=1.1m)
 
+
            !IBR_CONST2 = 6E+9     ! Young's modulus          (Y=6GPa)
-           IBR_CONST2 = 6E+9*0.01 ! Experimenting with this to shift
+           !IBR_CONST2 = 0.01*6E+9 ! Experimenting with this to shift 
                                   ! wave front
                                   ! NOTE: adjusting this has same effect as
                                   !       adjusting threshold value
+           IBR_CONST2 = 0.2E+9     ! custom value (strong ice bound)
+           !IBR_CONST2 = 9E+9     ! custom value (weak ice bound)
 
-           IBR_CONST3 = 0.55E+6 ! flexural strength of ice (sig=0.55MPa)
+
+           !IBR_CONST3 = 0.55E+6 ! flexural strength of ice (sig=0.55MPa)
+           IBR_CONST3 = 0.7E+6 ! custom value (strong ice bound)
+           !IBR_CONST3 = 0.1E+6 ! custom value (weak ice bound)           
+
+
            IBR_CONST4 = 0.015   ! non-dimensional threshold as 
                                 ! in Voermans et al. 2020  (I_br=0.015)
+
            !IBR_CONST5 = 1E+3    ! solid ice:  increase attenuation by IBR_CONST5
-           IBR_CONST5 = 0.01     ! broken ice: decrease attenuation by IBR_CONST5
+           IBR_CONST5 = 0.01     ! broken ice: decrease attenuation by IBR_CONST5 
+                                ! - remember to change HICE also to keep eqm
 
 
            !Calculate HS

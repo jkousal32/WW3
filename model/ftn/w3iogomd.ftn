@@ -492,8 +492,6 @@
              FLG2D(2,16)=.TRUE.
            CASE('WBT')
              FLG2D(2,17)=.TRUE.
-!/IC4           CASE('IBR_MEM')
-!/IC4             FLG2D(2,18)=.TRUE.
 !
 ! Group 3
 !
@@ -874,7 +872,6 @@
 !/IS2             FLG2D(1,9)=.TRUE.
 !/IS2           CASE('IC5')
 !/IS2             FLG2D(1,10)=.TRUE.!
-
 ! Group 2
 !
 !/OASACM         CASE('AHS')
@@ -915,8 +912,6 @@
            FLG2D(2,16)=.TRUE.
          CASE('WBT')
            FLG2D(2,17)=.TRUE.
-!/IC4           CASE('IBR_MEM')
-!/IC4             FLG2D(2,18)=.TRUE. 
 !
 ! Group 3
 !
@@ -2477,7 +2472,6 @@
       USE W3ADATMD, ONLY: AINIT, DW, UA, UD, AS, CX, CY, WN
       USE W3ADATMD, ONLY: HS, WLM, T02, T0M1, T01, FP0, THM, THS, THP0,&
                           WBT
-!/IC4    USE W3ADATMD, ONLY: IBR_MEM
       USE W3ADATMD, ONLY: FP1, THP1, DTDYN, &
                           FCUT, ABA, ABD, UBA, UBD, SXX, SYY, SXY,     &
                           PHS, PTP, PLP, PDIR, PSI, PWS, PWST, PNR,    &
@@ -2968,9 +2962,6 @@
                     WRITE ( NDSOG ) HCMAXD(1:NSEA)
                   ELSE IF ( IFI .EQ. 2 .AND. IFJ .EQ. 17 ) THEN
                     WRITE ( NDSOG ) WBT(1:NSEA)
-!/IC4                  ELSE IF ( IFI .EQ. 2 .AND. IFJ .EQ. 18 ) THEN
-!/IC4                    WRITE ( NDSOG ) IBR_MEM(1:NSEA)
-                    
 !
 !     Section 3)
 !

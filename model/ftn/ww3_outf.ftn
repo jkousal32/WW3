@@ -130,10 +130,8 @@
                           CFLTHMAX, CFLKMAX, BEDFORMS, WHITECAP, T02, &
                           CGE, T01, HSIG, STMAXE, STMAXD, HMAXE,      &
                           HCMAXE, HMAXD, HCMAXD, MSSD, MSCD, WBT
-      USE W3SRCEMD, ONLY: IBR_MEM    
       USE W3ODATMD, ONLY: NDSO, NDSE, NDST, NOGRP, NGRPP, IDOUT,      &
                           UNDEF, FLOGRD, FNMPRE, NOSWLL, NOGE
-                  
 !
       IMPLICIT NONE
 !/
@@ -882,7 +880,6 @@
 !/IS2               CALL W3S2XY (NSEA, NSEA, NX+1, NY, ICEF, MAPSF, X1 )
 !/IS2               ENDIF
 
-
               ELSE IF ( IFI .EQ. 2 .AND. IFJ .EQ. 1 ) THEN
                 FLONE  = .TRUE.
                 FSC    = 0.01
@@ -1082,18 +1079,6 @@
                 ELSE
                   CALL W3S2XY ( NSEA, NSEA, NX+1, NY, WBT, MAPSF, X1)
                 ENDIF
-
-!/IC4             ELSE IF ( IFI .EQ. 2 .AND. IFJ .EQ. 18 ) THEN
-!/IC4               FLONE = .TRUE.
-!/IC4               FSC = 1.
-!/IC4               UNITS = ''
-!/IC4               ENAME = '.ibr'
-!/IC4               IF ( ITYPE .EQ. 4) THEN
-!/IC4                  XS1    = IBR_MEM
-!/IC4               ELSE 
-!/IC4                 CALL W3S2XY (NSEA, NSEA, NX+1, NY, IBR_MEM, MAPSF, X1 )
-!/IC4               ENDIF
-                
 !
               ELSE IF ( IFI .EQ. 4 .AND. IFJ .EQ. 1 ) THEN
                 FLONE  = .TRUE.

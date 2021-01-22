@@ -365,12 +365,16 @@
                                  HSIG(:), STMAXE(:), STMAXD(:),      &
                                  HMAXE(:), HCMAXE(:), HMAXD(:),      &
                                  HCMAXD(:), QP(:), WBT(:)
+!        INTEGER, POINTER      :: IBR_MEM(:)  
+      INTEGER, INTENT(INOUT)  :: IBR_MEM(:,:)
         REAL, POINTER         :: XHS(:), XWLM(:), XT02(:), XT0M1(:),  &
                                  XT01 (:), XFP0(:), XTHM(:),          &
                                  XTHS(:), XTHP0(:), XFP1(:), XTHP1(:),&
                                  XHSIG(:), XSTMAXE(:), XSTMAXD(:),    &
                                  XHMAXE(:), XHCMAXE(:), XHMAXD(:),    &
                                  XHCMAXD(:), XQP(:), XWBT(:)
+!        INTEGER, POINTER      :: XIBR_MEM(:) 
+                         
 !
 ! Output fields group 3)
 !
@@ -530,6 +534,8 @@
                                  STMAXE(:), STMAXD(:), HMAXE(:),      &
                                  HCMAXE(:), HMAXD(:), HCMAXD(:), QP(:),&
                                  WBT(:)
+!      INTEGER, POINTER        :: IBR_MEM(:)
+                         
 !
       REAL, POINTER           :: EF(:,:), TH1M(:,:), STH1M(:,:),      &
                                  TH2M(:,:), STH2M(:,:)
@@ -946,6 +952,7 @@
                  WADATS(IMOD)%HCMAXE(NSEALM),                           &
                  WADATS(IMOD)%HCMAXD(NSEALM), WADATS(IMOD)%QP(NSEALM),  &
                  WADATS(IMOD)%WBT(NSEALM),                              &
+!                WADATS(IMOD)%IBR_MEM(NSEALM),                          &
                  STAT=ISTAT )
       CHECK_ALLOC_STATUS ( ISTAT )
 !
@@ -969,6 +976,8 @@
       WADATS(IMOD)%HCMAXD= UNDEF
       WADATS(IMOD)%QP     = UNDEF
       WADATS(IMOD)%WBT    = UNDEF
+      !WADATS(IMOD)%IBR_MEM= UNDEF
+
 
 !/MEMCHECK       WRITE(740+IAPROC,*) 'memcheck_____:', 'W3DIMA 3'
 !/MEMCHECK       call getMallocInfo(mallinfos)
@@ -1600,6 +1609,14 @@
           CHECK_ALLOC_STATUS ( ISTAT )
         END IF
 !
+      IF ( OUTFLAGS( 2, 18) ) THEN
+          ALLOCATE ( WADATS(IMOD)%XIBR_MEM (NXXX), STAT=ISTAT )
+          CHECK_ALLOC_STATUS ( ISTAT )
+        ELSE
+          ALLOCATE ( WADATS(IMOD)%XIBR_MEM (1), STAT=ISTAT )
+          CHECK_ALLOC_STATUS ( ISTAT )
+        END IF
+!
 !     IF ( OUTFLAGS( 2,xx) ) THEN
 !         ALLOCATE ( WADATS(IMOD)%XFP1(NXXX), STAT=ISTAT )
 !         CHECK_ALLOC_STATUS ( ISTAT )
@@ -1633,6 +1650,7 @@
       WADATS(IMOD)%XHCMAXE= UNDEF
       WADATS(IMOD)%XHCMAXD= UNDEF
       WADATS(IMOD)%XWBT   = UNDEF
+      WADATS(IMOD)%XIBR_MEM= UNDEF
 !     WADATS(IMOD)%XFP1   = UNDEF
 !     WADATS(IMOD)%XTHP1  = UNDEF
 !
@@ -2650,6 +2668,7 @@
           HCMAXD => WADATS(IMOD)%HCMAXD
           QP     => WADATS(IMOD)%QP
           WBT    => WADATS(IMOD)%WBT
+          IBR_MEM=> WADATS(IMOD)%IBR_MEM
 !
           EF     => WADATS(IMOD)%EF
           TH1M   => WADATS(IMOD)%TH1M
@@ -2949,6 +2968,7 @@
           HCMAXD => WADATS(IMOD)%XHCMAXD
           QP     => WADATS(IMOD)%XQP
           WBT    => WADATS(IMOD)%XWBT
+!          IBR_MEM=> WADATS(IMOD)%XIBR_MEM
 !         FP1    => WADATS(IMOD)%XFP1
 !         THP1   => WADATS(IMOD)%XTHP1
 !

@@ -971,6 +971,7 @@
                          THP0AUX2, HSIGAUX, STMAXEAUX,STMAXDAUX,       &
                          HMAXEAUX, HCMAXEAUX, HMAXDAUX, HCMAXDAUX,     &
                          WBTAUX, SUMWT2(NOGE(2))
+!/IC4        REAL          :: IBR_MEMAUX
 ! Local group 3 variables
         REAL          :: EFAUX(E3DF(2,1):E3DF(3,1)),                   &
                          TH1MAUX(E3DF(2,2):E3DF(3,2)),                 &
@@ -1059,6 +1060,7 @@
         HMAXD    = UNDEF
         HCMAXD   = UNDEF
         WBT      = UNDEF
+!/IC4        IBR_MEM  = UNDEF        
 !
 ! Group 3 variables
 !
@@ -1284,6 +1286,7 @@
                 HMAXDAUX    = UNDEF
                 HCMAXDAUX   = UNDEF
                 WBTAUX      = UNDEF
+!/IC4                IBR_MEMAUX  = UNDEF                
                 SUMWT2      = 0
 !
 ! Group 3 variables
@@ -1682,6 +1685,17 @@
                       WBTAUX = WBTAUX + WADATS(IGRID)%WBT(GSEA)*WT
                     END IF
                   END IF
+
+!/IC4                  IF ( FLOGRD(2,18) ) THEN
+!/IC4                    IF ( WADATS(IGRID)%IBR_MEM(GSEA) .NE. UNDEF ) THEN
+!/IC4                      SUMWT1(18) = SUMWT1(18) + WT
+!/IC4                      IF (IBR_MEMAUX .EQ. UNDEF) THEN
+!/IC4                        IBR_MEMAUX = WADATS(IGRID)%IBR_MEM(GSEA)*WT
+!/IC4                      ELSE 
+!/IC4                        IBR_MEMAUX = IBR_MEMAUX + WADATS(IGRID)%IBR_MEM(GSEA)*WT
+!/IC4                      END IF
+!/IC4                    END IF
+!/IC4                  END IF                                    
 !
 ! Group 3 variables
 !
@@ -2562,6 +2576,16 @@
                   WBT(ISEA) = WBT(ISEA) +                            &
                                WBTAUX / REAL( SUMWT2(17)+SUMGRD )
                 END IF
+
+!/IC4                IF ( IBR_MEMAUX .NE. UNDEF ) THEN
+!/IC4                  IBR_MEMAUX = IBR_MEMAUX / SUMWT2(18)
+!/IC4                  IF ( IBR_MEM(ISEA) .EQ. UNDEF )  THEN
+!/IC4                    IBR_MEM(ISEA) = IBR_MEMAUX / REAL( SUMGRD )
+!/IC4                  ELSE
+!/IC4                    IBR_MEM(ISEA) = IBR_MEM(ISEA) + IBR_MEMAUX / REAL( SUMGRD )
+!/IC4                  END IF
+!/IC4                END IF
+                
 !
 ! Group 3 variables
 !

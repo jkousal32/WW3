@@ -630,9 +630,10 @@
 
 
            ! Print checks
-           !IF (IY > 7 .AND. IY < 10 .AND. IX > 159 .AND. IX < 161) THEN
-           !  IF (HS >= 0.3) THEN
-           !  WRITE(*,*) 'HS=', HS
+           !IF (IY > 7 .AND. IY < 9) THEN
+           !  WRITE(*,*) 'IY=8: HS=', HS
+           !ELSEIF (IY > 97 .AND. IY < 99) THEN
+           !  WRITE(*,*) 'IY=98: HS=', HS
 
            !IF (IX == 163 .AND. IY == 9) THEN !(lon,lat = 76.3,-69.1)
            !   IF (IBR <= IBR_CONST4) THEN

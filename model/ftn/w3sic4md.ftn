@@ -667,29 +667,7 @@
 
            ! Print checks
            !IF (IX==100) PRINT*, IX, '45, IBR=', IBR_MEM(IX,45)
-           !IF (IX==154) PRINT*, IX, '24, IBR=', IBR_MEM(IX,24)
-           !IF (IX==144) PRINT*, IX, '25, IBR=', IBR_MEM(IX,25)
-           !IF (IX==150) PRINT*, IX, '3, IBR=', IBR_MEM(IX,3)
-           !IF (IX==150) PRINT*, IX, '4, IBR=', IBR_MEM(IX,4)
-           !IF (IX==150) PRINT*, IX, '27, IBR=', IBR_MEM(IX,27)
-           !IF (IX==125) PRINT*, IX, '4, IBR=', IBR_MEM(IX,4)
-
-           !IF (IX==155) PRINT*, IX, '23, IBR=', IBR_MEM(IX,23)
-           !IF (IX==157) PRINT*, IX, '23, IBR=', IBR_MEM(IX,23)
-           !IF (IX==159) PRINT*, IX, '23, IBR=', IBR_MEM(IX,23)
-           !IF (IX==161) PRINT*, IX, '23, IBR=', IBR_MEM(IX,23)
-           !IF (IX==163) PRINT*, IX, '23, IBR=', IBR_MEM(IX,23)
-           !IF (IX==165) PRINT*, IX, '23, IBR=', IBR_MEM(IX,23)
-           !IF (IX==167) PRINT*, IX, '23, IBR=', IBR_MEM(IX,23)
            
-           !IF (IX == 163 .AND. IY == 9) THEN !(lon,lat = 76.3,-69.1)
-           !   IF (IBR <= IBR_CONST4) THEN
-           !      WRITE(*,*) 'LT: IBR_MEM at',IX,IY,'=',IBR_MEM(IX,IY)
-           !   ELSE
-           !      WRITE(*,*) 'GT: IBR_MEM at',IX,IY,'=',IBR_MEM(IX,IY)
-           !   ENDIF
-           !ENDIF
-
            !IF (IX == 159 .AND. IY == 9) THEN !(lon,lat = 75.9,-69.1)
            !   IF (IBR <= IBR_CONST4) THEN
            !      WRITE(*,*) 'LT: IBR_MEM at',IX,IY,'=',IBR_MEM(IX,IY)

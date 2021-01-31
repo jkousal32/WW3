@@ -529,8 +529,6 @@
     
         CASE (9) ! As for case 8 + Voermans et al. 2020 ice break threshold
                  ! Author J. Kousal
-                 ! TODO: check L=2pi/k relationship (L=1/k ?)
-                 ! TODO: check WN_I=0 sets attenuation to 0
 
            IBR_CONST1 = 1.1     ! Real ice height          (h=1.1m)
 

@@ -329,6 +329,10 @@
       REAL                    :: IBR_CONST1, IBR_CONST2, &
                                  IBR_CONST3, IBR_CONST4, IBR_CONST5
       REAL                    :: LAMBDASQ, IBR, FPISTR, UST, FP
+
+      INTEGER                 :: IJ
+      REAL, ALLOCATABLE       :: KV(:), LHS(:), RHS(:)
+
 !/
 !/ ------------------------------------------------------------------- /
 !/
@@ -345,6 +349,9 @@
       ALLOCATE(KARG1(0:NK+1))
       ALLOCATE(KARG2(0:NK+1))
       ALLOCATE(KARG3(0:NK+1))
+      ALLOCATE(KV(0:10000))
+      ALLOCATE(LHS(0:10000))
+      ALLOCATE(RHS(0:10000))
       MARG1    = 0.0
       MARG2    = 0.0
       KARG1    = 0.0
@@ -368,6 +375,12 @@
       IBR_CONST3 = 0.0
       IBR_CONST4 = 0.0
       IBR_CONST5 = 0.0
+      KV         = 0.0
+      LHS        = 0.0
+      RHS        = 0.0
+      IJ         = 0
+
+
 !
 !     IF (.NOT.INFLAGS2(-7))THEN
 !        WRITE (NDSE,1001) 'ICE PARAMETER 1'
@@ -574,14 +587,39 @@
            FP     = ( 3.6E-4 + 0.92*FPISTR - 6.3E-10/FPISTR**3 )/UST*GRAV
            FP     = FP * TPIINV
            
+           ! -------------------------------------------------------
+           ! Calculate LAMBDASQ 
+           ! ---------
+           !   1) using deep water disperion relation
+           !
            !   lambda = (2*pi) / k
-           !   k = angf_peak**2 / g 
+           !   k = angf_peak**2 / g (DEEP)
            !     = (2*pi*f_peak)**2 / g
            !   lambda = (2*pi) / [(2*pi*f_peak)**2 / g]
            !          = (2*pi*g) / (2*pi*f_peak)**2
            !          = g / (2*pi*(f_peak**2))
            !   lambda**2 = ( g / (2*pi*(f_peak**2)) )**2
-           LAMBDASQ = ( GRAV * TPIINV / (FP**2) )**2
+           !LAMBDASQ = ( GRAV * TPIINV / (FP**2) )**2
+           !
+           ! ---------           
+           !   2) using general dispersion relation (more expensive?)
+           !   
+           !   Graphically solving for k using simultaneous eqns
+           !   angf_peak**2 = g*k*tanh(k*d)
+           !            LHS = RHS   
+           CALL LINSPACE(from=0.0, to=5.0, array=KV)   ! realistic bounds for kpeak
+           LHS = (TPI*FP)**2                           ! horizontal line
+           RHS = GRAV*KV*TANH(KV*DEPTH)                ! k-dependent curve
+           IJ  = MINLOC(ABS(LHS-RHS), DIM=1)           ! index of k soln
+
+           ! Print checks:
+           !IF (IX==100) PRINT*, 'K: EXACT=',KV(IJ)
+           !IF (IX==100) PRINT*, 'K: DEEP =',(TPI*FP)**2/GRAV
+
+           ! Calc lambdasq, but don't allow k lower than threshold
+           LAMBDASQ =  ( TPI / MAX(KV(IJ),0.0001) )**2
+           
+           ! -------------------------------------------------------
            IBR = HS*IBR_CONST1*IBR_CONST2 / (IBR_CONST3*LAMBDASQ)
 
            HICE = ICECOEF1 ! for this method, ICECOEF1=ice thickness
@@ -709,6 +747,48 @@
 !/ End of W3SIC4 --------------------------------------------------- /
 !/
       END SUBROUTINE W3SIC4
+
+
+!/ ------------------------------------------------------------------- /
+
+      SUBROUTINE LINSPACE(from, to, array)
+
+! Generates evenly spaced numbers from `from` to `to` (inclusive).
+!
+! Inputs:
+! -------
+!
+! from, to : the lower and upper boundaries of the numbers to generate
+!
+! Outputs:
+! -------
+!
+! array : Array of evenly spaced numbers
+              
+         IMPLICIT NONE
+         real , intent(in)  :: from, to
+         real , intent(out) :: array(:)
+         real               :: range
+         integer            :: n, i
+         n = size(array)
+         range = to - from
+
+         if (n == 0) return
+ 
+         if (n == 1) then
+             array(1) = from
+             return
+         end if
+
+ 
+         do i=1, n
+             array(i) = from + range * (i - 1) / (n - 1)
+         end do
+     END SUBROUTINE LINSPACE
+
+!/ ------------------------------------------------------------------- /
+
+
 !/
 !/ End of module W3SIC4MD ------------------------------------------ /
 !/

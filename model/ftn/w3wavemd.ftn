@@ -600,14 +600,13 @@
 
       !----------------------
       ! Method 1: Intitiate all to 0
-      !IBR_MEM(:,:) = 0 
+      IBR_MEM(:,:) = 0 
 
       !----------------------
       ! Method 2: Read in array computed externally of ice break up
-      OPEN(12, FILE='M3D_H0P45_A0P01_YY0P2_SS0P7_2020-01-10T00.txt')
-      READ(12,*) IBR_MEM
-      !IBR_MEM = TRANSPOSE(IBR_MEM)
-      PRINT*, '    IBR hot start using file pointed to in w3wavemd.ftn'
+      !OPEN(12, FILE='M3D_H0P45_A0P01_YY0P2_SS0P7_2020-01-06T00.txt')
+      !READ(12,*) IBR_MEM
+      !PRINT*, '    IBR hot start using file pointed to in w3wavemd.ftn'
 
       ! Print checks
 
@@ -620,6 +619,17 @@
       !  PRINT*, 'Y: ',ISEA
       !  PRINT*, IBR_MEM(:,ISEA)
       !END DO 
+
+      !DO ISEA = 1,NX
+      ! IF (ISEA==100) PRINT*, ISEA, '45, IBR=', IBR_MEM(ISEA,45)
+      ! IF (ISEA==155) PRINT*, ISEA, '23, IBR=', IBR_MEM(ISEA,23)
+      ! IF (ISEA==154) PRINT*, ISEA, '24, IBR=', IBR_MEM(ISEA,24)
+      ! IF (ISEA==144) PRINT*, ISEA, '25, IBR=', IBR_MEM(ISEA,25)
+      ! IF (ISEA==150) PRINT*, ISEA, '3, IBR=', IBR_MEM(ISEA,3)
+      ! IF (ISEA==150) PRINT*, ISEA, '4, IBR=', IBR_MEM(ISEA,4)
+      ! IF (ISEA==150) PRINT*, ISEA, '27, IBR=', IBR_MEM(ISEA,27)
+      ! IF (ISEA==125) PRINT*, ISEA, '4, IBR=', IBR_MEM(ISEA,4)
+      !END DO      
 
       !PRINT*, 'IBR SHAPE: ', SHAPE(IBR_MEM)
       

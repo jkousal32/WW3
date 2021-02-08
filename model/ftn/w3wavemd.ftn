@@ -600,13 +600,15 @@
 
       !----------------------
       ! Method 1: Intitiate all to 0
-      IBR_MEM(:,:) = 0 
+      !IBR_MEM(:,:) = 0 
 
       !----------------------
       ! Method 2: Read in array computed externally of ice break up
-      !OPEN(12, FILE='M3D_H0P45_A0P01_YY0P2_SS0P7_2020-01-06T00.txt')
-      !READ(12,*) IBR_MEM
-      !PRINT*, '    IBR hot start using file pointed to in w3wavemd.ftn'
+      PRINT*, '    IBR hot start using file pointed to in w3wavemd.ftn'
+      OPEN(12, FILE=   &
+           'IHOT/M3D_IHOT_H0P65_A0P01_YY0P2_SS0P7_2020-02-07T00.txt')
+      READ(12,*) IBR_MEM
+      CLOSE(12)      
 
       ! Print checks
 
@@ -621,7 +623,6 @@
 
       !PRINT*, 'IBR SHAPE: ', SHAPE(IBR_MEM)
       
-      !CLOSE(12)
       !----------------------
 
 

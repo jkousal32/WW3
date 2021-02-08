@@ -109,7 +109,7 @@
   # open mpi implementation
   if [ "$omp_mod" = 'yes' ]
   then
-    OMPI_HOME=~/openmpi-4.0.4/ompi
+    OMPI_HOME=~/openmpi/openmpi-4.0.4/ompi
     opt="$opt -qopenmp -I$OMPI_HOME/include"
   fi
 

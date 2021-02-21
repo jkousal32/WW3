@@ -603,6 +603,7 @@
            !
            ! ---------           
            !   2) using general dispersion relation (more expensive?)
+           !      - TODO: Use the WAVNU2 solver available from W3DISPMD for K
            !   
            !   Graphically solving for k using simultaneous eqns
            !   angf_peak**2 = g*k*tanh(k*d)
